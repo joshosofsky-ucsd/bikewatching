@@ -26,7 +26,7 @@ html, body {
   }
 
   #map svg circle {
-    fill: steelblue;
+    /* fill: steelblue; */
     fill-opacity: 0.8;
     stroke: white;
     pointer-events: auto; /* Enable pointer events for circles */
@@ -50,3 +50,43 @@ label {
     color: gray;
     font-style: italic;
 }
+
+/* New rule for shared CSS variables */
+#map circle, .legend > div {
+    --color-departures: steelblue;
+    --color-arrivals: darkorange;
+    --color: color-mix(
+      in oklch,
+      var(--color-departures) calc(100% * var(--departure-ratio)),
+      var(--color-arrivals)
+    );
+  }
+  
+  /* Legend styling */
+  .legend {
+    display: flex;
+    gap: 2em; /* Larger gap for parent */
+    margin-block: 1em; /* Space from the map */
+  }
+  
+  .legend > div {
+    display: flex;
+    align-items: center;
+    gap: 0.5em; /* Smaller gap for children */
+  }
+  
+  .legend > div::before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%; /* Make the symbols circular */
+    background-color: var(--color); /* Use the shared color variable */
+  }
+  
+  /* Additional element for the "Legend:" label */
+  .legend-label {
+    font-weight: bold;
+    margin-right: 1em;
+  }
+  
